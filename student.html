@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pro Student Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#fde047;
+  --secondary:#facc15;
+  --dark:#0f172a;
+  --card-bg:#1e293b;
+  --text-light:#e5e7eb;
+}
+
+/* Reset */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:linear-gradient(135deg,#020617,#1e293b);color:var(--text-light);}
+a{text-decoration:none;color:inherit;}
+
+/* Header */
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 50px;background:var(--dark);position:sticky;top:0;z-index:1000;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+header img{height:60px;}
+nav a{margin:0 15px;font-weight:600;color:var(--text-light);transition:.3s;}
+nav a:hover{color:var(--primary);}
+
+/* Hero */
+.hero{
+  height:50vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;
+}
+.hero h1{
+  font-size:48px;color:var(--primary);margin-bottom:15px;
+  animation:textGlow 2s infinite alternate;
+}
+@keyframes textGlow{from{text-shadow:0 0 5px #fde047;} to{text-shadow:0 0 20px #facc15;}}
+.hero p{font-size:20px;margin-bottom:20px;opacity:0;animation:fadeIn 1s forwards;animation-delay:0.3s;}
+@keyframes fadeIn{to{opacity:1;}}
+
+/* Grid Cards */
+.grid-container{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:25px;padding:40px 20px;
+}
+.card{
+  background:var(--card-bg);padding:25px;border-radius:20px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.3);transition:.5s;
+  cursor:pointer;text-align:center;opacity:0;transform:translateY(50px) scale(0.8);
+}
+.card.show{opacity:1;transform:translateY(0) scale(1);transition:.6s ease-out;}
+.card:hover{
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 25px 55px rgba(250,204,21,0.7);
+  background:linear-gradient(145deg,#1e293b,#334155);
+}
+.card h3{color:var(--primary);margin-bottom:12px;font-size:20px;}
+.card p{color:var(--text-light);font-size:14px;}
+
+/* Video Section */
+#video-section{display:none;padding:50px 20px;text-align:center;}
+#video-section h2{color:var(--primary);margin-bottom:20px;}
+#video-container{
+  margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;justify-items:center;
+}
+.video-card{
+  background:var(--card-bg);padding:20px;border-radius:15px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.3);cursor:pointer;
+  opacity:0;transform:scale(0.8) translateY(30px);transition:0.5s;
+}
+.video-card.show{opacity:1;transform:scale(1) translateY(0);}
+.video-card p{color:#fff;font-weight:600;text-align:center;}
+
+/* AI Assistant */
+#nova-fab{position:fixed;bottom:25px;right:25px;width:65px;height:65px;border-radius:50%;
+border:none;background:linear-gradient(135deg,#5f2cff,#00d4ff);color:white;font-size:30px;cursor:pointer;
+box-shadow:0 15px 40px rgba(0,0,0,.4);z-index:9999;transition:.3s;}
+#nova-fab:hover{transform:scale(1.15);}
+#nova-ai{position:fixed;bottom:100px;right:25px;width:380px;height:540px;background:#0f1220;
+border-radius:20px;display:none;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.6);
+z-index:9999;font-family:'Segoe UI',sans-serif;}
+#nova-header{padding:15px;background:linear-gradient(135deg,#5f2cff,#00d4ff);
+color:white;display:flex;justify-content:space-between;align-items:center;font-weight:600;border-radius:20px 20px 0 0;}
+#nova-header button{background:none;border:none;color:white;font-size:20px;cursor:pointer;}
+#nova-messages{flex:1;padding:15px;overflow-y:auto;}
+.msg{margin-bottom:12px;line-height:1.6;font-size:14px;word-wrap:break-word;}
+.user{color:#00d4ff;text-align:right;}
+.ai{color:#fff;text-align:left;}
+#nova-input{display:flex;padding:12px;border-top:1px solid rgba(255,255,255,.1);}
+#nova-input input{flex:1;padding:10px;border-radius:12px;border:none;outline:none;font-size:14px;background:#1e293b;color:white;}
+#nova-input button{margin-left:8px;border:none;background:#5f2cff;color:#fff;border-radius:12px;padding:0 16px;cursor:pointer;transition:.3s;}
+#nova-input button:hover{background:#00d4ff;}
+
+@media(max-width:768px){.grid-container{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+<img src="Dark_Blue_Beige_Circle_Illustrative_Class_Logo__1_-removebg-preview (1).png" alt="Logo">
+<nav>
+<a href="student.html">Home</a>
+<a href="contact copy.html">Contact</a>
+</nav>
+</header>
+
+<section class="hero">
+<h1>Welcome Students!</h1>
+<p>Choose your stage to start learning</p>
+</section>
+
+<!-- Stage Selection -->
+<section id="stage-section" class="grid-container">
+<!-- سيتم ملؤه تلقائيا بواسطة JS -->
+</section>
+
+<!-- Classes -->
+<section id="classes-container" style="display:none;">
+<h2 id="classes-title" style="text-align:center;color:#fde047;margin:20px 0;"></h2>
+<div class="grid-container" id="classes-grid"></div>
+</section>
+
+<!-- Subjects -->
+<section id="subjects-container" style="display:none;">
+<h2 id="subjects-title" style="text-align:center;color:#fde047;margin:20px 0;"></h2>
+<div class="grid-container" id="subjects-grid"></div>
+</section>
+
+<!-- Videos -->
+<section id="video-section">
+<h2 id="video-title"></h2>
+<div id="video-container"></div>
+</section>
+
+<script>
+// بيانات المراحل والصفوف والمواد
+const stages = ['Kindergarten','Primary','Preparatory','Secondary'];
+const stagesClasses = {
+  Kindergarten:['KG 1','KG 2','KG 3'],
+  Primary:['1st Grade','2nd Grade','3rd Grade','4th Grade','5th Grade','6th Grade'],
+  Preparatory:['1st Year Prep','2nd Year Prep','3rd Year Prep'],
+  Secondary:['1st Year Sec','2nd Year Sec','3rd Year Sec']
+};
+const subjectsData = {
+  Kindergarten:['Math','Art','Stories'],
+  Primary:['Math','Science','Languages','Social Studies'],
+  Preparatory:['Math','Science','Languages','Social Studies'],
+  Secondary:['Math','Science','Languages','Social Studies','Computer']
+};
+const videoExamples = ['Example Video 1','Example Video 2','Example Video 3','Example Video 4'];
+
+// إظهار المراحل عند تحميل الصفحة
+const stageSection = document.getElementById('stage-section');
+stages.forEach(stage=>{
+  const card = document.createElement('div');
+  card.className='card';
+  card.innerHTML=`<h3>${stage}</h3>`;
+  card.onclick=()=>showClasses(stage);
+  stageSection.appendChild(card);
+});
+animateCards(stageSection);
+
+// Animate Cards
+function animateCards(container){
+  const cards = container.querySelectorAll('.card, .video-card');
+  cards.forEach((c,i)=>setTimeout(()=>c.classList.add('show'), i*150));
+}
+
+// Show Classes
+function showClasses(stage){
+  const grid = document.getElementById('classes-grid');
+  const container = document.getElementById('classes-container');
+  const subjectsContainer = document.getElementById('subjects-container');
+  const videoSection = document.getElementById('video-section');
+  subjectsContainer.style.display='none';
+  videoSection.style.display='none';
+  grid.innerHTML='';
+  container.style.display='block';
+  document.getElementById('classes-title').innerText=stage+' Classes';
+  
+  stagesClasses[stage].forEach(cls=>{
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`<h3>${cls}</h3>`;
+    card.onclick=()=>showSubjects(stage, cls);
+    grid.appendChild(card);
+  });
+  animateCards(grid);
+  container.scrollIntoView({behavior:'smooth'});
+}
+
+// Show Subjects
+function showSubjects(stage, cls){
+  const grid = document.getElementById('subjects-grid');
+  const container = document.getElementById('subjects-container');
+  const videoSection = document.getElementById('video-section');
+  videoSection.style.display='none';
+  grid.innerHTML='';
+  container.style.display='block';
+  document.getElementById('subjects-title').innerText=cls+' Subjects';
+  
+  subjectsData[stage].forEach(sub=>{
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`<h3>${sub}</h3>`;
+    card.onclick=()=>showVideos(stage, cls, sub);
+    grid.appendChild(card);
+  });
+  animateCards(grid);
+  container.scrollIntoView({behavior:'smooth'});
+}
+
+// Show Video Examples
+function showVideos(stage, cls, sub){
+  const section=document.getElementById('video-section');
+  const container=document.getElementById('video-container');
+  section.style.display='block';
+  container.innerHTML='';
+  document.getElementById('video-title').innerText=sub+' Examples for '+cls;
+  
+  videoExamples.forEach(ex=>{
+    const div=document.createElement('div');
+    div.className='video-card';
+    div.innerHTML=`<p>${ex}</p>`;
+    container.appendChild(div);
+  });
+  animateCards(container);
+  section.scrollIntoView({behavior:'smooth'});
+}
+
+// Nova AI
+const nova=document.createElement('div');
+nova.id='nova-ai';
+nova.innerHTML=`
+<div id="nova-header">
+<span>Nova AI Assistant</span>
+<button onclick="toggleNova()">×</button>
+</div>
+<div id="nova-messages">
+<div class="msg ai">Hello 👋 I'm Nova AI. Ask me anything!</div>
+</div>
+<div id="nova-input">
+<input type="text" id="nova-text" placeholder="Type your question..." onkeydown="if(event.key==='Enter'){sendNova()}"/>
+<button onclick="sendNova()">➤</button>
+</div>
+`;
+document.body.appendChild(nova);
+
+const novaFab=document.createElement('button');
+novaFab.id='nova-fab';
+novaFab.innerText='🤖';
+novaFab.onclick=toggleNova;
+document.body.appendChild(novaFab);
+
+const messages=document.getElementById('nova-messages');
+
+function toggleNova(){
+  const ai=document.getElementById('nova-ai');
+  ai.style.display=(ai.style.display==='flex')?'none':'flex';
+  ai.style.flexDirection='column';
+}
+
+function addMsg(text,cls){
+  const div=document.createElement('div');
+  div.className='msg '+cls;
+  div.innerHTML=text.replace(/\n/g,'<br>');
+  messages.appendChild(div);
+  messages.scrollTop=messages.scrollHeight;
+}
+
+function sendNova(){
+  const input=document.getElementById('nova-text');
+  const text=input.value.trim();
+  if(!text) return;
+  addMsg('You: '+text,'user');
+  input.value='';
+  setTimeout(()=>respondNova(text),600);
+}
+
+function respondNova(text){
+  let reply='';
+  const t=text.toLowerCase();
+  if(t.includes('exam')||t.includes('test')){
+    reply='You can access exams via your teacher or check the provided materials!';
+  }else if(t.includes('motivate')||t.includes('encourage')){
+    reply='Keep going! Stay focused and practice daily, success is near!';
+  }else{
+    reply='I can answer questions about stages, classes, subjects, or help motivate you!';
+  }
+  addMsg('Nova: '+reply,'ai');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us - Pro Style</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+* {margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif;}
+body {background:linear-gradient(135deg,#0f172a,#020617); color:#e5e7eb; overflow-x:hidden;}
+.container {max-width:900px; margin:80px auto; padding:30px; background:linear-gradient(145deg,#1e293b,#111827); border-radius:20px; box-shadow:0 25px 60px rgba(0,0,0,0.7); transform:translateY(50px); opacity:0; animation:fadeInUp 1s forwards;}
+@keyframes fadeInUp {to {transform:translateY(0); opacity:1;}}
+h1 {color:#fde047; text-align:center; margin-bottom:20px; font-size:2.5rem; animation:textGlow 2s infinite alternate;}
+@keyframes textGlow {from {text-shadow:0 0 5px #fde047;} to {text-shadow:0 0 20px #facc15;}}
+p.subtitle {text-align:center; margin-bottom:40px; color:#cbd5e1; font-size:1.1rem; opacity:0; animation:fadeIn 1.5s forwards; animation-delay:0.5s;}
+@keyframes fadeIn {to {opacity:1;}}
+.contact-grid {display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+.contact-info, .contact-form {background:#111827; padding:30px; border-radius:20px; box-shadow:0 15px 40px rgba(0,0,0,0.5); transform:translateX(-50px); opacity:0; animation:slideIn 1s forwards;}
+.contact-info {animation-delay:0.8s;}
+.contact-form {animation-delay:1.2s;}
+@keyframes slideIn {to {transform:translateX(0); opacity:1;}}
+.contact-info h2, .contact-form h2 {color:#fde047; margin-bottom:20px;}
+.contact-info p {margin-bottom:15px;}
+.contact-info p span {font-weight:600; color:#facc15;}
+.contact-form input, .contact-form textarea {width:100%; padding:12px 15px; margin-bottom:20px; border-radius:10px; border:none; background:#1e293b; color:#fff; outline:none; transition:0.3s;}
+.contact-form input:focus, .contact-form textarea:focus {box-shadow:0 0 15px #fde047; transform:scale(1.02);}
+.contact-form button {padding:14px 20px; border:none; border-radius:25px; background:linear-gradient(135deg,#facc15,#fde047); color:#111827; font-weight:700; cursor:pointer; transition:0.3s; width:100%;}
+.contact-form button:hover {transform:scale(1.05); box-shadow:0 10px 30px rgba(250,204,21,0.7);}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Contact Us</h1>
+<p class="subtitle">We'd love to hear from you! Send us a message and we'll get back to you as soon as possible.</p>
+<div class="contact-grid">
+<div class="contact-info">
+<h2>Our Info</h2>
+<p><span>Email:</span> contact@example.com</p>
+<p><span>Phone:</span> +1 234 567 890</p>
+<p><span>Address:</span> 123 Example Street, City, Country</p>
+<p><span>Support Hours:</span> Mon - Fri, 9AM - 6PM</p>
+</div>
+<div class="contact-form">
+<h2>Send a Message</h2>
+<input type="text" placeholder="Your Name" id="name">
+<input type="email" placeholder="Your Email" id="email">
+<textarea rows="6" placeholder="Your Message" id="message"></textarea>
+<button onclick="sendContact()">Send Message</button>
+</div>
+</div>
+</div>
+<script>
+function sendContact(){
+  const name=document.getElementById('name').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const message=document.getElementById('message').value.trim();
+  if(!name || !email || !message){
+    alert('Please fill all fields!');
+    return;
+  }
+  alert('Thank you '+name+'! Your message has been sent.');
+  document.getElementById('name').value='';
+  document.getElementById('email').value='';
+  document.getElementById('message').value='';
+}
+
+</script>
+<script>
+function scrollToTimeline(){document.getElementById('timeline').scrollIntoView({behavior:'smooth'});}
+const steps=document.querySelectorAll('.timeline-step');
+window.addEventListener('scroll',()=>{
+    const triggerBottom=window.innerHeight*0.8;
+    steps.forEach(step=>{
+        const top=step.getBoundingClientRect().top;
+        if(top<triggerBottom){step.classList.add('show');}
+    });
+});
+function openPage(url){window.location.href=url;}
+
+</script>
+
+<!-- ================= NOVA AI ================= -->
+<button id="nova-fab">🤖</button>
+
+<div id="nova-ai">
+  <div id="nova-header">
+    <span>Nova AI Assistant</span>
+    <button onclick="toggleNova()">×</button>
+  </div>
+
+  <div id="nova-messages">
+    <div class="msg ai">Hello 👋 I'm Nova AI. Ask me anything or request an exam.</div>
+  </div>
+
+  <div id="nova-input">
+    <input type="text" id="nova-text" placeholder="Type your question here..." onkeydown="if(event.key==='Enter'){sendNova()}"/>
+    <button onclick="sendNova()">➤</button>
+  </div>
+</div>
+
+<style>
+#nova-fab{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  border:none;
+  background:linear-gradient(135deg,#5f2cff,#00d4ff);
+  color:white;
+  font-size:30px;
+  cursor:pointer;
+  box-shadow:0 15px 40px rgba(0,0,0,.4);
+  z-index:9999;
+  transition:.3s;
+}
+#nova-fab:hover{transform:scale(1.15);}
+#nova-ai{
+  position:fixed;
+  bottom:100px;
+  right:25px;
+  width:380px;
+  height:540px;
+  background:#0f1220;
+  border-radius:20px;
+  display:none;
+  flex-direction:column;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  z-index:9999;
+  font-family:'Segoe UI',sans-serif;
+}
+#nova-header{
+  padding:15px;
+  background:linear-gradient(135deg,#5f2cff,#00d4ff);
+  color:white;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:600;
+  border-radius:20px 20px 0 0;
+}
+.back-home{
+  position:fixed;
+  top:25px;
+  left:25px;
+  padding:12px 22px;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:600;
+  color:#020617;
+  background:linear-gradient(135deg,#fde047,#facc15);
+  box-shadow:0 15px 40px rgba(0,0,0,.4);
+  transition:all .3s ease;
+  z-index:9999;
+  animation:floatBtn 2s infinite alternate;
+}
+
+.back-home:hover{
+  transform:scale(1.08);
+  box-shadow:0 20px 60px rgba(250,204,21,.7);
+}
+
+@keyframes floatBtn{
+  from{transform:translateY(0);}
+  to{transform:translateY(-6px);}
+}
+
+#nova-header button{
+  background:none;
+  border:none;
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+}
+#nova-messages{
+  flex:1;
+  padding:15px;
+  overflow-y:auto;
+}
+.msg{
+  margin-bottom:12px;
+  line-height:1.6;
+  font-size:14px;
+  word-wrap:break-word;
+}
+.user{
+  color:#00d4ff;
+  text-align:right;
+}
+.ai{
+  color:#fff;
+  text-align:left;
+}
+#nova-input{
+  display:flex;
+  padding:12px;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+#nova-input input{
+  flex:1;
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  font-size:14px;
+  background:#1e293b;
+  color:white;
+}
+#nova-input button{
+  margin-left:8px;
+  border:none;
+  background:#5f2cff;
+  color:#fff;
+  border-radius:12px;
+  padding:0 16px;
+  cursor:pointer;
+  transition:.3s;
+}
+#nova-input button:hover{background:#00d4ff;}
+</style>
+
+<script>
+const nova=document.getElementById("nova-ai");
+const novaFab=document.getElementById("nova-fab");
+const messages=document.getElementById("nova-messages");
+
+function toggleNova(){
+  if(nova.style.display==='flex'){
+    nova.style.display='none';
+  }else{
+    nova.style.display='flex';
+    nova.style.flexDirection='column';
+  }
+}
+
+function addMsg(text,cls){
+  const div=document.createElement('div');
+  div.className='msg '+cls;
+  div.innerHTML=text.replace(/\n/g,'<br>');
+  messages.appendChild(div);
+  messages.scrollTop=messages.scrollHeight;
+}
+
+function sendNova(){
+  const input=document.getElementById('nova-text');
+  const text=input.value.trim();
+  if(!text) return;
+  addMsg('You: '+text,'user');
+  input.value='';
+  setTimeout(()=>respondNova(text),600);
+}
+
+function respondNova(text){
+  let reply='';
+  const t=text.toLowerCase();
+  if(t.includes('exam')||t.includes('test')){
+    reply=generateExam();
+  }else if(t.includes('hello')||t.includes('hi')){
+    reply="Hello 👋 I'm Nova AI. I can answer questions, explain lessons, or generate exams!";
+  }else{
+    reply="I understand your question.\n• I can explain any subject\n• Generate exams\n• Help students & teachers\n\nTry: *Create an exam for Grade 8 Math*";
+  }
+  addMsg("Nova: "+reply,'ai');
+}
+
+function generateExam(){
+  return `📘 <b>Generated Exam</b><br><br>
+<b>Subject:</b> Mathematics<br>
+<b>Level:</b> Middle School<br><br>
+1️⃣ What is 7 × 8 ?<br>A) 54  B) 56  C) 58  D) 60<br><br>
+2️⃣ Solve: (12 ÷ 3) + 5 = ?<br>A) 8  B) 9  C) 10  D) 11<br><br>
+3️⃣ If x = 4, what is 3x + 7 ?<br>A) 16  B) 17  C) 19  D) 20<br><br>
+4️⃣ Perimeter of square with side 5 cm?<br>A) 20 cm  B) 15 cm  C) 25 cm  D) 30 cm<br><br>
+5️⃣ How many sides in a triangle?<br>A) 2  B) 3  C) 4  D) 5<br><br>
+✅ <i>Exam created by Nova AI</i>`;
+}
+
+novaFab.addEventListener('click',toggleNova);
+
+</script>
+<!-- ================= END NOVA AI ================= -->
+ <button class="back-home" onclick="goHome()">
+  ⬅ Back To Home
+</button>
+<script>
+function goHome(){
+  window.location.href = "student.html"; 
+  // غير index.html باسم صفحة الهوم عندك
+}
+</script>
+
+</body>
+</html>
