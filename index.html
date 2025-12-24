@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up / Login - El Salhiah School</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{min-height:100vh;background:linear-gradient(135deg,#020617,#0f172a);display:flex;justify-content:center;align-items:center;color:white;}
+.container{background:linear-gradient(145deg,#1e293b,#111827);padding:50px 40px;border-radius:20px;width:90%;max-width:450px;box-shadow:0 20px 50px rgba(0,0,0,.6);text-align:center;}
+h1{color:#fde047;margin-bottom:10px;}
+p{color:#e5e7eb;margin-bottom:30px;}
+.input-group{margin-bottom:20px;text-align:left;}
+label{display:block;margin-bottom:8px;font-weight:600;color:#facc15;}
+input, select{width:100%;padding:12px 15px;border-radius:10px;border:none;background:#f1f5f9;font-size:15px;}
+input:focus, select:focus{outline:none;box-shadow:0 0 10px #fde047;}
+button{width:100%;padding:14px;border:none;border-radius:25px;background:linear-gradient(135deg,#facc15,#fde047);font-weight:700;cursor:pointer;margin-top:10px;transition:.3s;}
+button:hover{transform:scale(1.05);}
+.switch{margin-top:20px;font-size:14px;}
+.switch span{color:#fde047;cursor:pointer;font-weight:600;}
+.error{color:#f87171;margin-bottom:15px;display:none;}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>El Salhiah School</h1>
+<p>Create Account or Login</p>
+
+<!-- SIGN UP -->
+<div id="signup-box">
+    <div class="error" id="signup-error"></div>
+
+    <div class="input-group">
+        <label>Email (Gmail)</label>
+        <input type="email" id="signup-email" placeholder="example@gmail.com">
+    </div>
+
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="signup-password" placeholder="********">
+    </div>
+
+    <div class="input-group">
+        <label>Stage</label>
+        <select id="signup-stage">
+            <option value="">Select Stage</option>
+            <option value="KG">Kindergarten</option>
+            <option value="Primary">Primary</option>
+            <option value="Preparatory">Preparatory</option>
+            <option value="Secondary">Secondary</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label>Grade/Class</label>
+        <select id="signup-class">
+            <option value="">Select Class</option>
+        </select>
+    </div>
+
+    <button onclick="signup()">Create Account</button>
+
+    <div class="switch">
+        Already have an account? <span onclick="showLogin()">Login</span>
+    </div>
+</div>
+
+<!-- LOGIN -->
+<div id="login-box" style="display:none">
+    <div class="error" id="login-error"></div>
+
+    <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="login-email">
+    </div>
+
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="login-password">
+    </div>
+
+    <button onclick="login()">Login</button>
+
+    <div class="switch">
+        Don’t have an account? <span onclick="showSignup()">Sign Up</span>
+    </div>
+</div>
+
+<script>
+// ===== Stage -> Classes =====
+const stagesClasses = {
+  KG:['KG 1','KG 2','KG 3'],
+  Primary:['1st Grade','2nd Grade','3rd Grade','4th Grade','5th Grade','6th Grade'],
+  Preparatory:['1st Year Prep','2nd Year Prep','3rd Year Prep'],
+  Secondary:['1st Year Sec','2nd Year Sec','3rd Year Sec']
+};
+
+// ===== Storage =====
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+// ===== Populate Class Dropdown =====
+const stageSelect = document.getElementById("signup-stage");
+const classSelect = document.getElementById("signup-class");
+stageSelect.addEventListener('change',()=>{
+    const stage = stageSelect.value;
+    classSelect.innerHTML='<option value="">Select Class</option>';
+    if(stagesClasses[stage]){
+        stagesClasses[stage].forEach(c=>{
+            const opt=document.createElement('option');
+            opt.value=c;
+            opt.text=c;
+            classSelect.appendChild(opt);
+        });
+    }
+});
+
+// ===== Sign Up =====
+function signup(){
+    const email = document.getElementById("signup-email").value.trim();
+    const password = document.getElementById("signup-password").value.trim();
+    const stage = document.getElementById("signup-stage").value;
+    const grade = document.getElementById("signup-class").value;
+    const error = document.getElementById("signup-error");
+
+    error.style.display = "none";
+
+    if(!email || !password || !stage || !grade){
+        error.innerText = "Please fill all fields";
+        error.style.display = "block";
+        return;
+    }
+
+    const exists = users.find(u => u.email === email);
+    if(exists){
+        error.innerText = "This email already exists";
+        error.style.display = "block";
+        return;
+    }
+
+    users.push({ email, password, stage, grade });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    // Save logged in user info
+    localStorage.setItem("loggedInUser", JSON.stringify({ email, stage, grade }));
+
+    // Redirect to student page
+    window.location.href = "student.html";
+}
+
+// ===== Login =====
+function login(){
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value.trim();
+    const error = document.getElementById("login-error");
+
+    error.style.display = "none";
+
+    const user = users.find(u => u.email === email && u.password === password);
+    if(user){
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
+        window.location.href = "student.html";
+    }else{
+        error.innerText = "Invalid email or password";
+        error.style.display = "block";
+    }
+}
+
+// ===== Switch Forms =====
+function showLogin(){
+    document.getElementById("signup-box").style.display="none";
+    document.getElementById("login-box").style.display="block";
+}
+function showSignup(){
+    document.getElementById("login-box").style.display="none";
+    document.getElementById("signup-box").style.display="block";
+}
+</script>
+
+</body>
+</html>
+
